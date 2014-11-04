@@ -5,7 +5,7 @@
 // 5. 英文单词
 // 文件、数据总行数，每行数据最少列，每行数据最多列， 
 // 当每行数据最少列和最高列相等时，即为固定列数的随机序列
-
+// 读取大文本量的英文字典。
 package main;
 
 import java.io.BufferedWriter;
@@ -32,7 +32,8 @@ public class MacroData
 			//RandomLetter(DATA_TOTAL_ROWS, f);
 			//RandomLetterAndNumbers(DATA_TOTAL_ROWS, f);
 			//RandomNumbers(DATA_TOTAL_ROWS, f);
-			RandomASCIIs(DATA_TOTAL_ROWS, f);
+			//RandomASCIIs(DATA_TOTAL_ROWS, f);
+			RandomLetter(f, DATA_TOTAL_ROWS, DATA_LENGTH_PER_ROW, 50, 50);
 			System.out.println("Done!");
 		}
 		else
@@ -42,7 +43,8 @@ public class MacroData
 			//RandomLetter(DATA_TOTAL_ROWS, f);
 			//RandomLetterAndNumbers(DATA_TOTAL_ROWS, f);			
 			//RandomNumbers(DATA_TOTAL_ROWS, f);
-			RandomASCIIs(DATA_TOTAL_ROWS, f);
+			//RandomASCIIs(DATA_TOTAL_ROWS, f);
+			RandomLetter(f, DATA_TOTAL_ROWS, DATA_LENGTH_PER_ROW, 50, 50);
 			System.out.println("Done2!");
 		}
 		
@@ -63,7 +65,7 @@ public class MacroData
 			//先清空
 			
 			//
-			for(int i = 0; i < DATA_TOTAL_ROWS; i++)
+			for(long i = 0; i < DATA_TOTAL_ROWS; i++)
 			{
 				int temp = randomData.nextInt(DATA_LENGTH_PER_ROW - 1) + 1;
 				char[] tempChar = new char[DATA_LENGTH_PER_ROW];
@@ -80,7 +82,6 @@ public class MacroData
 		} 
 		catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -103,7 +104,7 @@ public class MacroData
 			//先清空
 			
 			//
-			for(int i = 0; i < DATA_TOTAL_ROWS; i++)
+			for(long i = 0; i < DATA_TOTAL_ROWS; i++)
 			{
 				int temp = randomData.nextInt(DATA_LENGTH_PER_ROW - 1) + 1;
 				char[] tempChar = new char[DATA_LENGTH_PER_ROW];
@@ -137,7 +138,7 @@ public class MacroData
 			//先清空
 			
 			//
-			for(int i = 0; i < DATA_TOTAL_ROWS; i++)
+			for(long i = 0; i < DATA_TOTAL_ROWS; i++)
 			{
 				int temp = randomData.nextInt(DATA_LENGTH_PER_ROW - 1) + 1;
 				char[] tempChar = new char[DATA_LENGTH_PER_ROW];
@@ -167,7 +168,7 @@ public class MacroData
 			Random randomAscii = new Random();
 			
 			
-			for(int i = 0; i < DATA_TOTAL_ROWS; i++)
+			for(long i = 0; i < DATA_TOTAL_ROWS; i++)
 			{
 				int temp = randomData.nextInt(DATA_LENGTH_PER_ROW - 1) + 1;
 				char [] tempChar = new char[DATA_LENGTH_PER_ROW];
@@ -185,5 +186,50 @@ public class MacroData
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public static void RandomLetter(File file, long fileRows, int filePreRow, int minCol, int maxCol)
+	{
+		try
+		{
+			if(filePreRow > DATA_LENGTH_PER_ROW)
+			{
+				System.out.println("Data pre row could not be bigger than " + DATA_LENGTH_PER_ROW);
+			}
+			
+			FileWriter fileWriter = new FileWriter(file, true);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			Letters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz".toCharArray());
+			Random randomData = new Random();
+			Random randomLetter = new Random();
+			
+			for(long i = 0; i < fileRows; i++)
+			{
+				int temp = randomData.nextInt(maxCol - minCol + 1) + minCol;
+				if(minCol == maxCol)
+				{
+					temp = minCol;
+				}
+				char[] tempChar = new char[DATA_LENGTH_PER_ROW];
+				for(int j = 0; j < temp; j++)
+				{
+					tempChar[j] = Letters[randomLetter.nextInt(Letters.length)];
+				}
+				bufferedWriter.write(tempChar);
+				bufferedWriter.newLine();
+			}
+			
+			bufferedWriter.close();
+			fileWriter.close();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public static void InputEnglishWords()
+	{
+		//TODO 把20万行以上的数据进行首字母分拣操作
 	}
 }
