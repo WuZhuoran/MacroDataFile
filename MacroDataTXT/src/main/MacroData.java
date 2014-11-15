@@ -33,7 +33,8 @@ public class MacroData
 			//RandomLetterAndNumbers(DATA_TOTAL_ROWS, f);
 			//RandomNumbers(DATA_TOTAL_ROWS, f);
 			//RandomASCIIs(DATA_TOTAL_ROWS, f);
-			RandomLetter(f, DATA_TOTAL_ROWS, DATA_LENGTH_PER_ROW, 50, 50);
+			//RandomLetter(f, DATA_TOTAL_ROWS, DATA_LENGTH_PER_ROW, 50, 50);
+			RandomNumbers(f, DATA_TOTAL_ROWS, DATA_LENGTH_PER_ROW, 0, 2, 8);
 			System.out.println("Done!");
 		}
 		else
@@ -44,7 +45,8 @@ public class MacroData
 			//RandomLetterAndNumbers(DATA_TOTAL_ROWS, f);			
 			//RandomNumbers(DATA_TOTAL_ROWS, f);
 			//RandomASCIIs(DATA_TOTAL_ROWS, f);
-			RandomLetter(f, DATA_TOTAL_ROWS, DATA_LENGTH_PER_ROW, 50, 50);
+			//RandomLetter(f, DATA_TOTAL_ROWS, DATA_LENGTH_PER_ROW, 50, 50);
+			RandomNumbers(f, DATA_TOTAL_ROWS, DATA_LENGTH_PER_ROW, 0, 2, 8);
 			System.out.println("Done2!");
 		}
 		
@@ -231,5 +233,37 @@ public class MacroData
 	public static void InputEnglishWords()
 	{
 		//TODO 把20万行以上的数据进行首字母分拣操作
+		
 	}
+
+	public static void RandomNumbers(File file, long fileRows, int filePreRow, double minNumber, double maxNumber, int digits)
+	{
+		//文件 文件行数 最小数 最大数 有效数字位数
+		try
+		{
+			FileWriter fileWriter = new FileWriter(file);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			Random randomDouble = new Random();
+			
+			for(int i = 0; i < fileRows; i++)
+			{
+				char[] tempChar = new char[filePreRow];
+				tempChar = ( Double.toString(maxNumber - randomDouble.nextDouble() * (maxNumber - minNumber))).toCharArray();
+				
+				bufferedWriter.write(tempChar);
+				bufferedWriter.newLine();
+			}
+			bufferedWriter.close();
+			fileWriter.close();
+			
+			
+		} catch (IOException e) 
+		{
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+	}
+
+
 }
